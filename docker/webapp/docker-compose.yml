@@ -1,0 +1,14 @@
+services:
+  node-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    volumes:
+      - ${APP_DIR:-./app}:/app/src
+      - ${PARQUET_FILE:-./data.parquet}:/app/data.parquet
+    command: /app/src /app/data.parquet
+    environment:
+      - NODE_ENV=production

@@ -1,0 +1,11 @@
+# ignore node_modules
+node_modules
+
+# ignore .env
+.env
+
+# ignore .DS_Store
+.DS_Store
+
+# ignore SUMO outputs
+*.out.*

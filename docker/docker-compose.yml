@@ -1,0 +1,22 @@
+services:
+  base:
+    build:
+      context: .
+      dockerfile: base.dockerfile
+    image: base-image:latest
+
+  sumo_w_parquet:
+    build:
+      context: .
+      dockerfile: parquet.dockerfile
+    image: parquet-image:latest
+    depends_on:
+      - base
+
+  sumo:
+    build:
+      context: .
+      dockerfile: sumo.dockerfile
+    image: sumo-image:latest
+    depends_on:
+      - base
