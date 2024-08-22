@@ -9,7 +9,7 @@ This repository contains the code to test the Parquet file format with SUMO. It 
 - `sumo` installed (only using the Python tools)
 - `python` installed
   - `pandas` and `polars` 
-- `duckdb` for quick and dirty Parquet transformations
+- `duckdb` for quick Parquet transformations
 
 ## GeoParquet-Enabled Replay
 
@@ -21,14 +21,17 @@ An example of using it is:
 
 ```bash
 # Convert parquet to geoparquet (w/ DuckDB)
-bash ./scripts/parquet_2_geoparquet.sh ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.parquet ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.geoparquet
+bash ./scripts/parquet_2_geoparquet.sh ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.parquet ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet
 
-export PARQUET_FILE=/Users/max/Development/transcality/parquet-test/SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.geoparquet
-
+# set this to a path to a geoparquet file (this can be generated from the above script)
+export PARQUET_FILE="./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet/time_group=2/data_0.parquet"
+# set this to the path to the webworker app
+export APP_DIR="./parquet-test/point_webworker" 
 
 cd docker/webapp
-docker compose build
-docker compose up
+
+# the docker compose I setup for this is annoying. Excuse my --no-cache
+docker compose build --no-cache && docker compose up
 
 ```
 

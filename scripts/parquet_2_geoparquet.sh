@@ -39,16 +39,26 @@ cat << EOF > $TMP_SQL
 CREATE TABLE input_data AS SELECT * FROM parquet_scan('$INPUT_FILE');
 
 CREATE TABLE geoparquet_data AS
-SELECT *
-EXCLUDE 
-    time,
-    [x, y] AS geometry,
-    CAST(time AS DOUBLE) AS time,
-FROM input_data;
+WITH min_time AS (
+    SELECT MIN(CAST(time AS DOUBLE)) AS min_time
+    FROM input_data
+),
+input_with_time AS (
+    SELECT *
+    REPLACE(CAST(time as DOUBLE) as time)
+    FROM input_data
+)
+SELECT
+    i.*,
+    [i.x, i.y] AS geometry,
+    ((i.time - m.min_time) / 600)::INT AS time_group
+FROM input_with_time i, min_time m
+WHERE i.x IS NOT NULL AND i.y IS NOT NULL;
+
 
 COPY (
     SELECT * FROM geoparquet_data
-) TO "$OUTPUT_FILE" (FORMAT 'PARQUET', ROW_GROUP_SIZE 100_000);
+) TO "$OUTPUT_FILE" (FORMAT 'PARQUET', PARTITION_BY (time_group));
 EOF
 
 # Run the SQL commands using DuckDB

@@ -27,7 +27,6 @@ for i in {1..3}; do
     echo "Run $i:"
     time docker run --rm -v "$SIM_DIR:/sim" parquet-image:latest sumo -c /sim/sumo.sumocfg --emission-output /sim/emission.parquet --emission-output.attributes="id,fuel,x,y,speed" --end=21600 --seed="${i}000"
     echo "------------------------------"
-    exit 1
 done
 
 # run vanilla sumo

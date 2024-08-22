@@ -27,13 +27,12 @@ cp -r $SRC_DIR/* /app/
 
 # Install dependencies
 cd /app
-npm install
+yarn install
 
-# Run the main application
-npm run build
-mv dist/* .
+# compile the react app
+yarn build && cp /app/data.parquet /app/dist/data.parquet
 
 # Start http-server in the background
-npx http-server --cors -p 8080
+cd dist &&  npx http-server --cors -p 8080
 
 

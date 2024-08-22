@@ -54,37 +54,37 @@ self.onmessage = async (event: MessageEvent) => {
       }
       const { timeRange, zoom } = payload;
       
-      // TODO: Make sure this logic is correct
-      timeRange[1] += 120;
+      // // TODO: Make sure this logic is correct
+      // timeRange[1] += 4;
 
-      // store the last time range
-      // only return data if the time range is 30 sec away from the last time range
-      if (
-        Math.abs(lastTimeRange[0] - timeRange[0]) < 30 &&
-        Math.abs(lastTimeRange[1] - timeRange[1]) < 30
-      ) {
-        return;
-      }
+      // // store the last time range
+      // // only return data if the time range is 30 sec away from the last time range
+      // if (
+      //   Math.abs(lastTimeRange[0] - timeRange[0]) < 30 &&
+      //   Math.abs(lastTimeRange[1] - timeRange[1]) < 30
+      // ) {
+      //   return;
+      // }
 
-      lastTimeRange = timeRange;
+      // lastTimeRange = timeRange;
 
-      const startIndex = binarySearch(
-        timeColumn,
-        timeRange[0],
-        0,
-        timeColumn.length - 1
-      );
-      const endIndex = binarySearch(
-        timeColumn,
-        timeRange[1],
-        0,
-        timeColumn.length - 1
-      );
+      // const startIndex = binarySearch(
+      //   timeColumn,
+      //   timeRange[0],
+      //   0,
+      //   timeColumn.length - 1
+      // );
+      // const endIndex = binarySearch(
+      //   timeColumn,
+      //   timeRange[1],
+      //   0,
+      //   timeColumn.length - 1
+      // );
 
-      const filteredTable = table.slice(startIndex, endIndex);
+      // const filteredTable = table.slice(startIndex, endIndex);
+      const filteredTable = table;
       const serializedTable = arrow.RecordBatchStreamWriter.writeAll(
         // if i don't do this, I get a BigInt error. No idea why lol
-        // Need to use the filteredTable attributes themselves to get the columns
         filteredTable.select(["time", "x", "y", "speed", "geometry", ])
       ).toUint8Array(true);
       self.postMessage({ type: "FILTERED_DATA", payload: serializedTable }, [
