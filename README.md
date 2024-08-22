@@ -13,6 +13,12 @@ This repository contains the code to test the Parquet file format with SUMO. It 
 
 ## GeoParquet-Enabled Replay
 
+
+
+https://github.com/user-attachments/assets/15a98604-6180-4b2c-b7e7-9833012e7f74
+
+
+
 The app in `point_webworker` displays the power of using geoparquet as the intermediate format for SUMO.
 
 It reads in the emission output from SUMO and replays the movement of all cars in Tuscaloosa on a second by second basis. 
