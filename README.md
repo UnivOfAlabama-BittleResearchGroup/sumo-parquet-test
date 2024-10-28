@@ -66,11 +66,19 @@ bash ./scripts/run_sim_docker.sh ./SUMO_SIM/final_model_20240725/default_tls_mic
 
 ### Results
 
-#### 1 Hour **Microscopic** Simulation of Tuscaloosa (from 3 simulation runs)
+#### Max - 1 Hour **Microscopic** Simulation of Tuscaloosa (from 3 simulation runs)
 
 | Format | Sim Time (s) | Read Time (s) | Total Time (s) | File Size (MB) |
 |--------|--------------|---------------|----------------| ---------------|
 | XML    |  393.6       |  127.5        |  521.18        | 1200           |
 | Parquet|  363.1       |  0.972        |  364.10        | 336            |
+
+#### Josh - 1 Hour **Microscopic** Simulation of Tuscaloosa (from 3 simulation runs)
+
+| Format | Sim Time (s) | Read Time (s) | Total Time (s) | File Size (MB) |
+|--------|--------------|---------------|----------------| ---------------|
+| XML    |  263.4       |  88.98        |  353.35        | 797            |
+| Parquet|  216.9       |  0.415        |  217.33        | 318            |
+
 
 
