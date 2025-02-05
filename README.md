@@ -11,35 +11,6 @@ This repository contains the code to test the Parquet file format with SUMO. It 
   - `pandas` and `polars` 
 - `duckdb` for quick Parquet transformations
 
-## GeoParquet-Enabled Replay
-
-
-
-https://github.com/user-attachments/assets/15a98604-6180-4b2c-b7e7-9833012e7f74
-
-
-
-The app in `point_webworker` displays the power of using geoparquet as the intermediate format for SUMO.
-
-It reads in the emission output from SUMO and replays the movement of all cars in Tuscaloosa on a second by second basis. 
-
-An example of using it is:
-
-```bash
-# Convert parquet to geoparquet (w/ DuckDB)
-bash ./scripts/parquet_2_geoparquet.sh ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.parquet ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet
-
-# set this to a path to a geoparquet file (this can be generated from the above script)
-export PARQUET_FILE="./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet/time_group=2/data_0.parquet"
-# set this to the path to the webworker app
-export APP_DIR="./parquet-test/point_webworker" 
-
-cd docker/webapp
-
-# the docker compose I setup for this is annoying. Excuse my --no-cache
-docker compose build --no-cache && docker compose up
-
-```
 
 
 ## SUMO Parquet vs. XML Speed Test
@@ -81,4 +52,31 @@ bash ./scripts/run_sim_docker.sh ./SUMO_SIM/final_model_20240725/default_tls_mic
 | Parquet|  216.9       |  0.415        |  217.33        | 318            |
 
 
+## GeoParquet-Enabled Replay
+
+
+https://github.com/user-attachments/assets/15a98604-6180-4b2c-b7e7-9833012e7f74
+
+
+The app in `point_webworker` displays the power of using geoparquet as the intermediate format for SUMO.
+
+It reads in the emission output from SUMO and replays the movement of all cars in Tuscaloosa on a second by second basis. 
+
+An example of using it is:
+
+```bash
+# Convert parquet to geoparquet (w/ DuckDB)
+bash ./scripts/parquet_2_geoparquet.sh ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emission.parquet ./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet
+
+# set this to a path to a geoparquet file (this can be generated from the above script)
+export PARQUET_FILE="./SUMO_SIM/final_model_20240725/NEMA_tls_micro/emissions-geoparquet/time_group=2/data_0.parquet"
+# set this to the path to the webworker app
+export APP_DIR="./point_webworker" 
+
+cd docker/webapp
+
+# the docker compose I setup for this is annoying. Excuse my --no-cache
+docker compose build --no-cache && docker compose up
+
+```
 
